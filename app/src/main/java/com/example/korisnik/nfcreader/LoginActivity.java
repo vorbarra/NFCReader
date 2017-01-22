@@ -38,12 +38,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        /* Views
+        // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
         mDetailTextView = (TextView) findViewById(R.id.detail);
         mEmailField = (EditText) findViewById(R.id.field_email);
         mPasswordField = (EditText) findViewById(R.id.field_password);
-        */
+
 
 
          // Buttons
@@ -108,8 +108,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
+                            Log.i(TAG, "task.isSuccessful()=" + task.isSuccessful());
                             mStatusTextView.setText(R.string.auth_failed);
                         }else {
+                            Log.i(TAG, "task.isSuccessful()=" + task.isSuccessful());
                             Intent myIntent = new Intent(LoginActivity.this, SubjectsActivity.class);
                             myIntent.putExtra("userId", user.getUid());
                             LoginActivity.this.startActivity(myIntent);
@@ -157,6 +159,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             findViewById(R.id.email_password_fields).setVisibility(View.GONE);
             findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
 
+            Intent myIntent = new Intent(LoginActivity.this, SubjectsActivity.class);
+            //myIntent.putExtra("userId", user.getUid());
+            LoginActivity.this.startActivity(myIntent);
+
         } else {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
@@ -173,6 +179,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int i = v.getId();
 
         if (i == R.id.email_sign_in_button) {
+            Log.i(TAG, "Email: " + mEmailField.getText().toString() + "pass: " + mPasswordField.getText().toString());
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         } else if (i == R.id.sign_out_button) {
             signOut();
